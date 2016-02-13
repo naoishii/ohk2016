@@ -5,6 +5,6 @@ import config from '../config';
 gulp.task('watch', function () {
     // js
     watch(config.watch.js, function () {
-        gulp.start(['webpack', 'serverBuild']);
+        gulp.start(['webpack']);
     });
 });

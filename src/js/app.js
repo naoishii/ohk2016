@@ -10,7 +10,7 @@ const Engine = Matter.Engine;
 const engine = Engine.create(document.body, {
   render: {
     options: {
-      //wireframes: false
+      wireframes: false,
       width: constants.STAGE_WIDTH, // canvasの横幅
       height: constants.STAGE_HEIGHT, // canvasの高さ
     }
