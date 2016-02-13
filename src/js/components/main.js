@@ -4,7 +4,7 @@ import stage from './stage.js';
 import spin from './spin.js';
 import goal from './goal.js';
 
-export default function main(engine) {
+export default function main(engine, callback) {
 
   const World = Matter.World;
   const Bodies = Matter.Bodies;
@@ -41,6 +41,7 @@ export default function main(engine) {
         if (dangerCount > 100) {
           dangerCount = 0;
           // すながはんどら
+          return callback(false);
         }
       }
 
@@ -53,12 +54,13 @@ export default function main(engine) {
         if (goalCount > 100) {
           goalCount = 0;
           // すながはんどら
+          return callback(true);
         }
       }
     }
 
   });
-  Events.on(engine, 'collisionEnd', (event) => {
+  Events.on(engine, 'collisionEnd', () => {
     console.log({
       x: circleA.position.x,
       y: circleA.position.y,
