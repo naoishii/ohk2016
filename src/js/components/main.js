@@ -2,7 +2,7 @@ import Matter from 'matter-js';
 
 import stage from './stage.js';
 import spin from './spin.js';
-import hell from './hell.js';
+import goal from './goal.js';
 
 export default function main(engine) {
 
@@ -22,7 +22,7 @@ export default function main(engine) {
   // add all of the bodies to the world
   const c = spin();
   console.log(c);
-  World.add(engine.world, [circleA, ...stage(), ...spin(engine)]);
+  World.add(engine.world, [circleA, ...stage(), ...spin(engine), ...goal()]);
 
   let dangerCount = 0;
   let goalCount = 0;
@@ -34,7 +34,7 @@ export default function main(engine) {
       const pair = pairs[i];
       // しんだとき
       if ((pair.bodyA.name === 'coin' || pair.bodyB.name === 'coin') &&
-          (pair.bodyA.name === 'goal' || pair.bodyB.name === 'goal')) {
+          (pair.bodyA.name === 'hell' || pair.bodyB.name === 'hell')) {
         console.log('きけん！');
         dangerCount += 1;
 
@@ -47,8 +47,8 @@ export default function main(engine) {
       // ゴールした時
       if ((pair.bodyA.name === 'coin' || pair.bodyB.name === 'coin') &&
           (pair.bodyA.name === 'gaol' || pair.bodyB.name === 'goal')) {
-        console.log('きけん！');
-        go += 1;
+        console.log('やったぜ！');
+        goalCount += 1;
 
         if (goalCount > 100) {
           goalCount = 0;
