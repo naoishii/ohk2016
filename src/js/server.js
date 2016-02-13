@@ -51,7 +51,14 @@ function play() {
 	});
 
 
-	var coin = main(engine);
+	var coin = main(engine, function (s) {
+		clearInterval(intervalid);
+		if(s) {
+		  stop("1");
+		} else {
+		  stop("2");			
+		}
+	});
 
 	// run the engine
 	//Engine.run(engine);
@@ -66,7 +73,7 @@ function play() {
 	  var deg = fs.readFileSync("/home/tsunaga/deg.txt");
 	  io.sockets.emit("publish", {value:{x:coin.position.x, y:coin.position.y, angel:coin.angle, door:deg}});
       fs.writeFile('/home/tsunaga/game_status', "0");
-	}, 16);
+	}, 30);
 }
 
 function stop(state) {
