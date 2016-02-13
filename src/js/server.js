@@ -1,6 +1,6 @@
 import Matter from 'matter-js';
-
 import main from './components/main.js';
+
 
 // Matter.js module aliases
 const Engine = Matter.Engine;
@@ -15,12 +15,17 @@ const engine = Engine.create({
 });
 
 
-main(engine);
-
+var coin = main(engine);
 
 // run the engine
 //Engine.run(engine);
-
-for (let i = 0; i < 10000; i++) {
-  Matter.Engine.update(engine, 16);
-}
+var start= new Date()*1;
+var total =0; 
+setInterval(function () {
+  var cur = new Date()*1;
+  var diff = cur - start - total;
+  Matter.Engine.update(engine, diff);
+  total += diff;
+  console.log(coin);
+  console.log(coin.position.x, coin.position.y);
+}, 16);

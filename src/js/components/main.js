@@ -22,5 +22,5 @@ export default function main(engine) {
   Events.on(engine, 'collisionStart', () => {
     console.log(circleA.position.x, circleA.position.y);
   });
-
+  return circleA;
 };

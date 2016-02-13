@@ -41,8 +41,11 @@ module.exports = {
             filename: 'serverBundle.js'
         },
         resolve: {
-            extensions: ['', '.js']
+            extensions: ['', '.js'],
         },
+		node: {
+			fs:"empty"
+		},
         module: {  
             loaders: [
                 {
@@ -54,6 +57,9 @@ module.exports = {
         }
     },
 
+	node: {
+		fs:"empty"
+	},
     watch: {
         js: relativeSrcPath + '/js/**',
         styl: relativeSrcPath + '/styl/**',
