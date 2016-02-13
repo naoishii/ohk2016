@@ -1,6 +1,7 @@
 import Matter from 'matter-js';
 
 import stage from './stage.js';
+import spin from './spin.js';
 
 export default function main(engine) {
 
@@ -12,15 +13,30 @@ export default function main(engine) {
   const circleA = Bodies.circle(300, 0, 20, {
     density: 0.001, // 質量
     frictionAir: 0.01, // 空気抵抗
-    restitution: 1, // 弾力性
-    friction: 0.01 // 摩擦
+    restitution: 0.2, // 弾力性
+    friction: 0.001, // 摩擦
+    name: 'tsunaga'
   });
 
   // add all of the bodies to the world
-  World.add(engine.world, [circleA, ...stage()]);
+  const c = spin();
+  console.log(c);
+  World.add(engine.world, [circleA, ...stage(), ...spin(engine)]);
 
-  Events.on(engine, 'collisionStart', () => {
-    console.log(circleA.position.x, circleA.position.y);
+  window.pos = [];
+  Events.on(engine, 'collisionEnd', (event) => {
+    pos.push({
+      x: circleA.position.x,
+      y: circleA.position.y,
+    });
+    //if (event.pairs.length > 0) {
+    //  var pair = event.pairs[0];
+    //  console.log(pair.bodyA, pair.bodyB);
+    //  pair.bodyA.render.fillStyle = '#aaaaaa';
+    //  pair.bodyB.render.fillStyle = '#aaaaaa';
+    //}
   });
+
+
   return circleA;
 };
