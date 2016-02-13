@@ -23,6 +23,7 @@ export default function main(engine) {
   console.log(c);
   World.add(engine.world, [circleA, ...stage(), ...spin(engine)]);
 
+  window = window || {};
   window.pos = [];
   Events.on(engine, 'collisionEnd', (event) => {
     pos.push({
