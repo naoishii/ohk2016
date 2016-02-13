@@ -15,5 +15,5 @@ open `index.html`
 
 # for Server
 ```
-gulp run
+npm run build:server
 ```

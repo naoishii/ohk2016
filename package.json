@@ -4,7 +4,8 @@
   "description": "ohk2016",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:server": "babel ./src/js -d lib"
   },
   "author": "naoishii",
   "license": "BSD-2-Clause",
