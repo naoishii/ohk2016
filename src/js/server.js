@@ -4,7 +4,16 @@ import main from './components/main.js';
 
 // Matter.js module aliases
 const Engine = Matter.Engine;
-const engine = Engine.create();
+const engine = Engine.create({
+  //  render: {
+  //    options: {
+  //      //wireframes: false
+  //      width: 640, // canvasの横幅
+  //      height: 1136, // canvasの高さ
+  //    }
+  //  }
+});
+
 
 main(engine);
 

@@ -1,5 +1,7 @@
 import Matter from 'matter-js';
 
+import stage from './stage.js';
+
 export default function main(engine) {
 
   const World = Matter.World;
@@ -7,7 +9,7 @@ export default function main(engine) {
   const Events = Matter.Events;
 
   // create two boxes and a ground
-  const circleA = Bodies.circle(400, 200, 40, {
+  const circleA = Bodies.circle(200, 200, 40, {
     density: 0.001, // 質量
     frictionAir: 0.01, // 空気抵抗
     restitution: 1, // 弾力性
@@ -15,13 +17,10 @@ export default function main(engine) {
   });
 
   const boxA = Bodies.rectangle(40, 50, 80, 80);
-  const boxB = Bodies.rectangle(450, 50, 80, 80);
-  const ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
-  const wallR = Bodies.rectangle(800, 400, 30, 400, { isStatic: true });
-  const wallL = Bodies.rectangle(0, 400, 30, 400, { isStatic: true });
+  const boxB = Bodies.rectangle(150, 50, 80, 80);
 
   // add all of the bodies to the world
-  World.add(engine.world, [circleA, boxA, boxB, ground, wallR, wallL]);
+  World.add(engine.world, [circleA, boxA, boxB, ...stage()]);
 
 
   Events.on(engine, 'collisionStart', () => {
