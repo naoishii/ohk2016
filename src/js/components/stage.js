@@ -5,7 +5,7 @@ export default function getWorld() {
 
   const Bodies = Matter.Bodies;
 
-  const ground = Bodies.rectangle(200, STAGE_HEIGHT, 400, 20, { isStatic: true });
+  const ground = Bodies.rectangle(200, STAGE_HEIGHT, 400, 20, { isStatic: true, name: 'hell' });
   const wallR = Bodies.rectangle(STAGE_WIDTH, STAGE_HEIGHT / 2, 10, STAGE_HEIGHT, { isStatic: true });
   const wallL = Bodies.rectangle(0, STAGE_HEIGHT / 2, 10, STAGE_HEIGHT, { isStatic: true });
 
@@ -23,7 +23,8 @@ export default function getWorld() {
   });
   const bar4 = Bodies.rectangle(330, 170, 70, 10, {
     isStatic: true,
-    angle: Math.PI * 0.06
+    angle: Math.PI * 0.06,
+    name: 'hell',
   });
   const bar5 = Bodies.rectangle(190, 230, 200, 10, {
     isStatic: true,
@@ -38,13 +39,19 @@ export default function getWorld() {
     isStatic: true,
     angle: Math.PI * 0.06
   });
+  const bar7a = Bodies.rectangle(230, 350, 60, 10, {
+    isStatic: true,
+    angle: Math.PI * 0.06,
+    name: 'hell',
+  });
   const bar8 = Bodies.rectangle(40, 300, 60, 10, {
     isStatic: true,
-    angle: Math.PI * -0.06
+    angle: Math.PI * -0.06,
+    name: 'hell',
   });
 
 
-  const bar9 = Bodies.rectangle(40, 430, 220, 10, {
+  const bar9 = Bodies.rectangle(40, 460, 220, 10, {
     isStatic: true,
     angle: Math.PI * -0.04
   });
@@ -57,7 +64,7 @@ export default function getWorld() {
 
   return [
     ground, wallR, wallL, bar1, bar2, bar3, bar4, bar5,
-    bar6, bar7, bar8, bar9, bar10, bar11
+    bar6, bar7, bar7a, bar8, bar9, bar10, bar11
   ];
   
 }

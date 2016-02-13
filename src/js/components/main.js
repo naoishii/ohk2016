@@ -2,6 +2,7 @@ import Matter from 'matter-js';
 
 import stage from './stage.js';
 import spin from './spin.js';
+import hell from './hell.js';
 
 export default function main(engine) {
 
@@ -15,7 +16,7 @@ export default function main(engine) {
     frictionAir: 0.01, // 空気抵抗
     restitution: 0.2, // 弾力性
     friction: 0.001, // 摩擦
-    name: 'tsunaga'
+    name: 'coin'
   });
 
   // add all of the bodies to the world
@@ -23,11 +24,46 @@ export default function main(engine) {
   console.log(c);
   World.add(engine.world, [circleA, ...stage(), ...spin(engine)]);
 
+  let dangerCount = 0;
+  let goalCount = 0;
+  Events.on(engine, 'collisionActive', (event) => {
+    const pairs = event.pairs;
+
+    // change object colours to show those ending a collision
+    for (let i = 0; i < pairs.length; i++) {
+      const pair = pairs[i];
+      // しんだとき
+      if ((pair.bodyA.name === 'coin' || pair.bodyB.name === 'coin') &&
+          (pair.bodyA.name === 'goal' || pair.bodyB.name === 'goal')) {
+        console.log('きけん！');
+        dangerCount += 1;
+
+        if (dangerCount > 100) {
+          dangerCount = 0;
+          // すながはんどら
+        }
+      }
+
+      // ゴールした時
+      if ((pair.bodyA.name === 'coin' || pair.bodyB.name === 'coin') &&
+          (pair.bodyA.name === 'gaol' || pair.bodyB.name === 'goal')) {
+        console.log('きけん！');
+        go += 1;
+
+        if (goalCount > 100) {
+          goalCount = 0;
+          // すながはんどら
+        }
+      }
+    }
+
+  });
   Events.on(engine, 'collisionEnd', (event) => {
     console.log({
       x: circleA.position.x,
       y: circleA.position.y,
     });
+
     //if (event.pairs.length > 0) {
     //  var pair = event.pairs[0];
     //  console.log(pair.bodyA, pair.bodyB);
