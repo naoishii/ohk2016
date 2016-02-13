@@ -51,7 +51,7 @@ function play() {
 	});
 
 
-	var coin = main(engine, function (s) {
+	var obj = main(engine, function (s) {
 		clearInterval(intervalid);
 		if(s) {
 		  stop("1");
@@ -59,19 +59,32 @@ function play() {
 		  stop("2");			
 		}
 	});
+	var coin = obj.coin;
+	var force = obj.force;
+	
 
 	// run the engine
 	//Engine.run(engine);
 	var start= new Date()*1;
-	var total =0; 
+	var total = 0;
+	var deg_prev = fs.readFileSync("/home/tsunaga/deg.txt");
 	intervalid=setInterval(function () {
 	  var cur = new Date()*1;
 	  var diff = cur - start - total;
 	  Matter.Engine.update(engine, diff);
 	  total += diff;
-	  console.log(coin.position.x, coin.position.y);
 	  var deg = fs.readFileSync("/home/tsunaga/deg.txt");
-	  io.sockets.emit("publish", {value:{x:coin.position.x, y:coin.position.y, angel:coin.angle, door:deg}});
+	  
+	  force( -(deg - deg_prev)/2500 );
+	  console.log(-(deg - deg_prev)/2500);
+	  deg_prev = deg;
+	  var res = fs.readFileSync("/home/tsunaga/res.txt");
+	  if (res=='1') {
+		fs.writeFile('/home/tsunaga/res.txt', "0");
+		clearInterval(intervalid);
+		stop("2");
+	  }
+	  io.sockets.emit("publish", {value:{x:coin.position.x, y:coin.position.y, angel:coin.angle, door:''+deg}});
       fs.writeFile('/home/tsunaga/game_status', "0");
 	}, 30);
 }
@@ -83,8 +96,8 @@ function stop(state) {
 	});
 
 
-	var coin = main(engine);
-
+	var coin = main(engine).coin;
+	
 	// run the engine
 	//Engine.run(engine);
 	var start= new Date()*1;
@@ -93,9 +106,8 @@ function stop(state) {
 	  var cur = new Date()*1;
 	  var diff = cur - start - total;
 	  total += diff;
-	  //console.log(coin.position.x, coin.position.y);
-	  var deg = fs.readFileSync("/home/tsunaga/deg.txt");
-	  io.sockets.emit("publish", {value:{x:coin.position.x, y:coin.position.y, angel:coin.angle, door:deg}});
+	  var deg = fs.readFileSync("/home/tsunaga/res.txt");
+	  io.sockets.emit("publish", {value:{x:coin.position.x, y:coin.position.y, angel:coin.angle, door:''+deg}});
 	  fs.writeFile('/home/tsunaga/game_status', state);
 	  var tch = fs.readFileSync("/home/tsunaga/tch.txt");
 	  if(tch=='1') {

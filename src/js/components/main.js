@@ -15,14 +15,13 @@ export default function main(engine, callback) {
     density: 0.001, // 質量
     frictionAir: 0.01, // 空気抵抗
     restitution: 0.2, // 弾力性
-    friction: 0.001, // 摩擦
+    friction: 0.1, // 摩擦
     name: 'coin'
   });
 
   // add all of the bodies to the world
-  const c = spin();
-  console.log(c);
-  World.add(engine.world, [circleA, ...stage(), ...spin(engine), ...goal()]);
+  const c = spin(engine);
+  World.add(engine.world, [circleA, ...stage(), ...c.objects, ...goal()]);
 
   let dangerCount = 0;
   let goalCount = 0;
@@ -75,5 +74,5 @@ export default function main(engine, callback) {
   });
 
 
-  return circleA;
+  return {coin:circleA, force:c.force};
 };

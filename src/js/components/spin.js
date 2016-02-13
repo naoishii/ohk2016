@@ -23,8 +23,8 @@ export default function getSpin(engine) {
   //    Body.applyForce(catapultB, {x: 0, y: 0}, {x: -0.04, y: 0});
   //    Body.applyForce(catapultC, {x: 0, y: 0}, {x: 0.04, y: 0});
   //  });
-
-  return [
+  return {
+	  objects:[
     circleA1,
     circleA2,
     catapultA,
@@ -72,5 +72,11 @@ export default function getSpin(engine) {
         bodyB: circleC2,
         stiffness: 0.5,
       }),
-  ];
+  ],
+  force: function (f) {
+		Body.applyForce(catapultA, {x: 0, y: 0}, {x: f, y: 0});
+		Body.applyForce(catapultB, {x: 0, y: 0}, {x: -f, y: 0});
+		Body.applyForce(catapultC, {x: 0, y: 0}, {x: f, y: 0});
+	  }
+  };
 }
