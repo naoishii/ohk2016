@@ -66,5 +66,4 @@ export default function getWorld() {
     ground, wallR, wallL, bar1, bar2, bar3, bar4, bar5,
     bar6, bar7, bar7a, bar8, bar9, bar10, bar11
   ];
-  
 }

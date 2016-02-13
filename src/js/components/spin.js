@@ -18,11 +18,11 @@ export default function getSpin(engine) {
   const circleC2 = Bodies.circle(20, 470, 10, {isStatic: true});
   const catapultC = Bodies.rectangle(20, 430, 20, 30, {});
 
-  document.body.addEventListener('click', () => {
-    Body.applyForce(catapultA, {x: 0, y: 0}, {x: 0.04, y: 0});
-    Body.applyForce(catapultB, {x: 0, y: 0}, {x: -0.04, y: 0});
-    Body.applyForce(catapultC, {x: 0, y: 0}, {x: 0.04, y: 0});
-  });
+  //  document.body.addEventListener('click', () => {
+  //    Body.applyForce(catapultA, {x: 0, y: 0}, {x: 0.04, y: 0});
+  //    Body.applyForce(catapultB, {x: 0, y: 0}, {x: -0.04, y: 0});
+  //    Body.applyForce(catapultC, {x: 0, y: 0}, {x: 0.04, y: 0});
+  //  });
 
   return [
     circleA1,

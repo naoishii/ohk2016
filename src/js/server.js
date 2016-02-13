@@ -2,39 +2,13 @@ import Matter from 'matter-js';
 import main from './components/main.js';
 
 
-// Matter.js module aliases
-const Engine = Matter.Engine;
-const engine = Engine.create({
-  //  render: {
-  //    options: {
-  //      //wireframes: false
-  //      width: 640, // canvasの横幅
-  //      height: 1136, // canvasの高さ
-  //    }
-  //  }
-});
-
-
-var coin = main(engine);
-
-// run the engine
-//Engine.run(engine);
-var start= new Date()*1;
-var total =0; 
-setInterval(function () {
-  var cur = new Date()*1;
-  var diff = cur - start - total;
-  Matter.Engine.update(engine, diff);
-  total += diff;
-  console.log(coin);
-  console.log(coin.position.x, coin.position.y);
-}, 16);
 
 // 1.モジュールオブジェクトの初期化
 var fs = require("fs");
 var server = require("http").createServer(function(req, res) {
+  console.log('hujkhjk2');
      res.writeHead(200, {"Content-Type":"text/html"});
-     var output = fs.readFileSync("./index.html", "utf-8");
+     var output = fs.readFileSync("/home/tsunaga/index.html", "utf-8");
      res.end(output);
 }).listen(8080);
 var io = require("socket.io").listen(server);
@@ -44,6 +18,7 @@ var userHash = {};
 
 // 2.イベントの定義
 io.sockets.on("connection", function (socket) {
+  console.log('hujkhjk');
 
   // 接続開始カスタムイベント(接続元ユーザを保存し、他ユーザへ通知)
   socket.on("connected", function (name) {
@@ -52,11 +27,12 @@ io.sockets.on("connection", function (socket) {
     io.sockets.emit("publish", {value: msg});
   });
 
+
   // メッセージ送信カスタムイベント
   socket.on("publish", function (data) {
     io.sockets.emit("publish", {value:data.value});
   });
-
+  
   // 接続終了組み込みイベント(接続元ユーザを削除し、他ユーザへ通知)
   socket.on("disconnect", function () {
     if (userHash[socket.id]) {
@@ -66,3 +42,67 @@ io.sockets.on("connection", function (socket) {
     }
   });
 });
+
+var intervalid = null;
+function play() {
+	// Matter.js module aliases
+	const Engine = Matter.Engine;
+	const engine = Engine.create({
+	});
+
+
+	var coin = main(engine, function (s) {
+		clearInterval(intervalid);
+		if(s) {
+		  stop("1");
+		} else {
+		  stop("2");			
+		}
+	});
+
+	// run the engine
+	//Engine.run(engine);
+	var start= new Date()*1;
+	var total =0; 
+	intervalid=setInterval(function () {
+	  var cur = new Date()*1;
+	  var diff = cur - start - total;
+	  Matter.Engine.update(engine, diff);
+	  total += diff;
+	  console.log(coin.position.x, coin.position.y);
+	  var deg = fs.readFileSync("/home/tsunaga/deg.txt");
+	  io.sockets.emit("publish", {value:{x:coin.position.x, y:coin.position.y, angel:coin.angle, door:deg}});
+      fs.writeFile('/home/tsunaga/game_status', "0");
+	}, 30);
+}
+
+function stop(state) {
+	// Matter.js module aliases
+	const Engine = Matter.Engine;
+	const engine = Engine.create({
+	});
+
+
+	var coin = main(engine);
+
+	// run the engine
+	//Engine.run(engine);
+	var start= new Date()*1;
+	var total =0; 
+	intervalid=setInterval(function () {
+	  var cur = new Date()*1;
+	  var diff = cur - start - total;
+	  total += diff;
+	  //console.log(coin.position.x, coin.position.y);
+	  var deg = fs.readFileSync("/home/tsunaga/deg.txt");
+	  io.sockets.emit("publish", {value:{x:coin.position.x, y:coin.position.y, angel:coin.angle, door:deg}});
+	  fs.writeFile('/home/tsunaga/game_status', state);
+	  var tch = fs.readFileSync("/home/tsunaga/tch.txt");
+	  if(tch=='1') {
+		  clearInterval(intervalid);
+		  play();
+	  }
+	}, 500);
+}
+
+stop("2");
