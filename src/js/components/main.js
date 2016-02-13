@@ -19,8 +19,13 @@ export default function main(engine) {
   // add all of the bodies to the world
   World.add(engine.world, [circleA, ...stage()]);
 
+  window.pos = [];
   Events.on(engine, 'collisionStart', () => {
-    console.log(circleA.position.x, circleA.position.y);
+    pos.push({
+      x: circleA.position.x,
+      y: circleA.position.y,
+    });
+    console.log(pos);
   });
 
 };
