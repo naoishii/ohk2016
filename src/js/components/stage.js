@@ -22,4 +22,5 @@ export default function getWorld() {
   return [
     ground, wallR, wallL, bar1, bar2
   ];
+  
 }

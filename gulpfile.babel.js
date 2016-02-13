@@ -10,7 +10,7 @@ requireDir('./gulp/tasks', { recurse: true });
 
 
 gulp.task('dev', function() {
-  sequence('watch', 'serve');
+  sequence('watch');
 });
 
 const serve = function(isTest) {

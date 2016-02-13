@@ -27,5 +27,5 @@ export default function main(engine) {
     });
     console.log(pos);
   });
-
+  return circleA;
 };
